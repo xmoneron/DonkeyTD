@@ -13,17 +13,39 @@ class EmptyState():
         return
 
 class StateMachine():
+    """
+
+    """
     def __init__(self):
+        """
+
+        """
         self._states = {"empty": EmptyState()}
         self._current_state = "empty"
 
     def update(self,pygame_event):
+        """
+
+        :param pygame_event:
+        :return:
+        """
         self._states[self._current_state].update(pygame_event)
 
     def render(self,fenetre):
+        """
+
+        :param fenetre:
+        :return:
+        """
         self._states[self._current_state].render(fenetre)
 
     def change(self, state_name, param = None):
+        """
+
+        :param state_name:
+        :param param:
+        :return:
+        """
         self._states[self._current_state].on_exit()
         self._current_state = state_name
         if param is not None:
@@ -33,17 +55,32 @@ class StateMachine():
 
 
     def add(self, state_name, state):
+        """
+
+        :param state_name:
+        :param state:
+        :return:
+        """
         self._states[state_name] = state
 
 class MenuState():
+    """
+
+    """
 
     def __init__(self, state_machine):
+        """
+      
+        :param state_machine:
+        """
         self._state_machine = state_machine
 
 
     def update(self, pygame_event):
         """
-        ON recupére les actions du joueur pour lancer la prochaine states.
+
+       :param pygame_event: 
+       :return: 
         """
         if pygame_event.type == KEYDOWN:
             if pygame_event.key == K_ESCAPE:
@@ -54,6 +91,11 @@ class MenuState():
                 self._state_machine.change(JEU,niveau2)
 
     def on_enter(self):
+        """
+
+        :param self:
+        :return:
+        """
         self.image = pygame.image.load(image_accueil).convert_alpha()
 
     def render(self,fenetre):
@@ -85,6 +127,11 @@ class NiveauState:
         self.fin = ()
 
     def on_enter(self,niveau):
+        """
+
+        :param niveau:
+        :return:
+        """
 
         with open(niveau, "r") as fichier:
             pos_y = 0
@@ -106,6 +153,11 @@ class NiveauState:
         self.perso = Perso(dk_haut, dk_bas, dk_gauche, dk_droite)
 
     def render(self,fenetre):
+        """
+
+        :param fenetre:
+        :return:
+        """
         for index_ligne in range(self._height_map):
             for index_sprit in range(self._width_map):
                 position_x = index_sprit * taille_sprite
@@ -119,18 +171,32 @@ class NiveauState:
         self.perso.render(fenetre)
 
     def on_exit(self):
+        """
+
+        :return:
+        """
         self.structure_niveau = {}
         self._height_map = 0
         self._width_map = 0
 
 
     def update(self, event):
+        """
+
+        :param event:
+        :return:
+        """
         if event.type == KEYDOWN:
             if event.key == K_ESCAPE:
                 self.state_machine.change(MENU)
         self.perso.update(event,self)
 
     def deplacement_possible(self, position):
+        """
+
+        :param position:
+        :return:
+        """
         if self.hors_map(position):
             return False
         if self.bloquant[self.structure_niveau[position]]:
@@ -139,6 +205,11 @@ class NiveauState:
             return True
 
     def hors_map(self, position):
+        """
+
+        :param position:
+        :return:
+        """
         hors_map = [True for element in position if element <
                     0 or element > nombre_sprite_cote - 1]
         return True in hors_map
@@ -153,6 +224,13 @@ class Perso:
     """
 
     def __init__(self, sprite_haut, sprite_bas, sprite_gauche, sprite_droit):
+        """
+
+        :param sprite_haut:
+        :param sprite_bas:
+        :param sprite_gauche:
+        :param sprite_droit:
+        """
         self.sprite = {
             Orientation.HAUT: pygame.image.load(sprite_haut).convert_alpha(),
             Orientation.BAS: pygame.image.load(sprite_bas).convert_alpha(),
@@ -176,6 +254,12 @@ class Perso:
 
 
     def update(self, event, niveau_state):
+        """
+
+        :param event:
+        :param niveau_state:
+        :return:
+        """
         if event.type == KEYDOWN:
 
             if event.key == K_DOWN:
