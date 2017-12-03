@@ -8,7 +8,7 @@ import sys
 base = 'Win32GUI' if sys.platform=='win32' else None
 
 executables = [
-    Executable('dklabyrinthe.py', base=base)
+    Executable('dk.py', base=base)
 ]
 
 setup(name='DonkeyTD',

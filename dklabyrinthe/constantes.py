@@ -11,7 +11,7 @@ titre_fenetre = "DK Labyrinthe"
 image_icone = "assets/dk_droite.png"
 
 # Listes des images du jeu
-image_accueil = "assets/accueil.png"
+image_accueil = "./accueil.png"
 image_fond = "assets/fond.jpg"
 image_mur = "assets/mur.png"
 image_depart = "assets/depart.png"
@@ -31,3 +31,8 @@ niveau2 = "assets/niveau2"
 JEU = "jeu"
 MENU = "menu"
 
+# Orientation
+HAUT = "haut"
+BAS = "bas"
+GAUCHE = "gauche"
+DROITE = "droite"
